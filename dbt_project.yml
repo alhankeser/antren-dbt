@@ -1,9 +1,8 @@
 name: antren
 
-config-version: 2
-version: 1.7
-
 profile: antren
+
+config-version: 2
 
 model-paths: ["models"]
 seed-paths: ["seeds"]
@@ -18,3 +17,8 @@ target-path: "target"
 packages-install-path: "packages"
 
 clean-targets: ["target"]
+
+models:
+  +persist_docs:
+    relation: true
+    columns: true

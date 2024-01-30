@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: int__activities
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - id
+            - start_time_ts
+    columns:
+      - name: id
+        tests:
+          - unique
+      - name: start_time_ts
+      - name: start_time_utc
+      - name: points
+  - name: int__activities_points
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - id
+            - ts
+      - name: id
+      - name: start_time_ts
+      - name: start_time_utc
+      - name: ts
+      - name: watts
+      - name: heart_rate

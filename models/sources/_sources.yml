@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: antren_app
+    schema: antren_app
+    tables:
+      - name: activities
+        identifier: activities_raw
+        columns:
+          - name: activity_id
+            description: >
+              "Unique ID assigned to each activity."
+            tests:
+              - unique
+          - name: data
+            description: >
+              "JSON-like object that contains activity type-specific data such as time (unix timestamps), watts (cycling), pace (running) and heart rate."
