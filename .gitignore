@@ -6,3 +6,4 @@ packages/*
 .user.yml
 .DS_Store
 !.gitkeep
+package-lock.yml
