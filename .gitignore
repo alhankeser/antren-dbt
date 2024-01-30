@@ -1,0 +1,8 @@
+venv/*
+target/*
+log/
+logs/
+packages/*
+.user.yml
+.DS_Store
+!.gitkeep

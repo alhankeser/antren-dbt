@@ -1,0 +1,20 @@
+name: antren
+
+config-version: 2
+version: 1.7
+
+profile: antren
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analysis"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+docs-paths: ["docs"]
+asset-paths: ["assets"]
+
+target-path: "target"
+packages-install-path: "packages"
+
+clean-targets: ["target"]
