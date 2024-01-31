@@ -9,3 +9,4 @@ keys
 .DS_Store
 !.gitkeep
 package-lock.yml
+profiles.yml

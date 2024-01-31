@@ -1,0 +1,18 @@
+antren:
+        target: dev
+        outputs:
+                dev:
+                        type: bigquery
+                        method: oauth
+                        project: "{{ env_var('GCP_PROJECT_ID') }}"
+                        dataset: "{{ env_var('PERSONAL_SCHEMA') }}"
+                        threads: 4
+                        location: "{{ env_var('GCP_LOCATION') }}"
+                prod:
+                        type: bigquery
+                        method: oauth
+                        project: "{{ env_var('GCP_PROJECT_ID') }}"
+                        dataset: "{{ env_var('PRODUCTION_SCHEMA') }}"
+                        threads: 4
+                        location: "{{ env_var('GCP_LOCATION') }}"
+                        job_execution_timeout_seconds: 3600
