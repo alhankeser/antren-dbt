@@ -1,2 +1,1 @@
 dbt-bigquery==1.7.3
-shandy-sqlfmt==0.21.2

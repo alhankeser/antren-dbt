@@ -1,0 +1,17 @@
+antren:
+        target: dev
+        outputs:
+                dev:
+                        type: bigquery
+                        method: oauth
+                        project: "{{ env_var('ANTREN_GCP_PROJECT_ID') }}"
+                        dataset: "{{ env_var('ANTREN_PERSONAL_SCHEMA') }}"
+                        threads: 4
+                        location: "{{ env_var('GCP_DEFAULT_LOCATION') }}"
+                prod:
+                        type: bigquery
+                        method: oauth
+                        project: "{{ env_var('ANTREN_GCP_PROJECT_ID') }}"
+                        dataset: "{{ env_var('ANTREN_PRODUCTION_SCHEMA') }}"
+                        threads: 4
+                        location: "{{ env_var('GCP_DEFAULT_LOCATION') }}"

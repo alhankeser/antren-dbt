@@ -3,6 +3,8 @@ target/*
 log/
 logs/
 packages/*
+keys
+.env
 .user.yml
 .DS_Store
 !.gitkeep
