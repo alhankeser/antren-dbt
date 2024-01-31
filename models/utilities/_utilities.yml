@@ -1,0 +1,6 @@
+version: 2
+
+models:
+  - name: util__dates
+    columns:
+      - name: date_day
