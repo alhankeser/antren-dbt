@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: int__activities
+  - name: stg__activities
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -14,7 +14,7 @@ models:
       - name: start_time_ts
       - name: start_time_utc
       - name: points
-  - name: int__activities_points
+  - name: stg__activities_points
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:

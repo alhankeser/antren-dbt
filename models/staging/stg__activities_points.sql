@@ -1,7 +1,7 @@
 {{ config(materialized="incremental") }}
 
 with
-    activities as (select * from {{ ref("int__activities") }}),
+    activities as (select * from {{ ref("stg__activities") }}),
 
     activities_arrays as (
         select
