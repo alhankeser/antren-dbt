@@ -33,4 +33,5 @@ RUN dbt deps
 USER appuser
 
 EXPOSE 8080
-CMD dbt run --target dev
+ARG env
+CMD dbt run --target $env
