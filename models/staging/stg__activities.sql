@@ -3,19 +3,19 @@ with
 
     updated as (
         select
-            id, 
-            start_time_ts, 
+            id,
+            start_time_ts,
             timestamp_seconds(start_time_ts) as start_time_utc,
-            points, 
+            points,
         from source
     ),
 
     final as (
         select 
-            id, 
-            start_time_ts, 
+            id,
+            start_time_ts,
             start_time_utc,
-            points 
+            points
         from updated
     )
 

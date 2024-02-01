@@ -13,8 +13,36 @@ with
             json_extract_array(points, '$.heart_rate') as heart_rate_array
         from activities
         {% if is_incremental() %}
-            where start_time_ts > (select max(start_time_ts) from {{ this }})
+            where start_time_utc > (select max(start_time_utc) from {{ this }})
         {% endif %}
+    ),
+
+    activities_end_times as (
+        select
+            id,
+            cast(max(ts) as int64) end_time_ts
+        from activities_arrays,
+            unnest(ts_array) as ts
+        group by id
+    ),
+
+    activities_filled_in_ts as (
+        select
+            a.id,
+            e.end_time_ts,
+            generate_array(a.start_time_ts - {{ var("peak_time_ranges") | max }}, e.end_time_ts) as ts_array
+        from activities_arrays a
+        inner join activities_end_times e
+            on a.id = e.id
+    ),
+
+    activities_filled_in_ts_unnested as (
+        select
+            id,
+            end_time_ts,
+            ts
+        from activities_filled_in_ts,
+            unnest(ts_array) as ts
     ),
 
     activities_unnested as (
@@ -35,15 +63,31 @@ with
             and ts_offset = heart_rate_offset
     ),
 
+    joined as (
+        select
+            f.id,
+            max(a.start_time_ts) over (partition by f.id) as start_time_ts,
+            max(a.start_time_utc) over (partition by f.id) as start_time_utc,
+            f.end_time_ts,
+            f.ts,
+            coalesce(a.watts, 0) as watts,
+            coalesce(a.heart_rate, 0) as heart_rate
+        from activities_filled_in_ts_unnested f
+        left join activities_unnested a
+            on a.id = f.id
+            and a.ts = f.ts
+    ),
+
     final as (
         select 
-            id, 
-            start_time_ts, 
-            start_time_utc, 
+            id,
+            start_time_ts,
+            start_time_utc,
+            end_time_ts,
             ts,
             watts, 
             heart_rate 
-        from activities_unnested
+        from joined
     )
 
 select * from final

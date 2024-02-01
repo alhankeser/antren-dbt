@@ -6,14 +6,14 @@ models:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
             - id
-            - start_time_ts
+            - start_time_utc
     columns:
       - name: id
         tests:
           - unique
-      - name: start_time_ts
       - name: start_time_utc
       - name: points
+  
   - name: stg__activities_points
     tests:
       - dbt_utils.unique_combination_of_columns:
@@ -22,8 +22,13 @@ models:
             - ts
     columns:
       - name: id
-      - name: start_time_ts
       - name: start_time_utc
       - name: ts
       - name: watts
       - name: heart_rate
+  
+  # - name: stg__activities_peaks
+  #   columns:
+  #     - name: id
+  #     - name: start_time_utc
+  #     - name: 

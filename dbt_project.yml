@@ -18,6 +18,9 @@ packages-install-path: "packages"
 
 clean-targets: ["target"]
 
+vars:
+  peak_time_ranges: [5, 15, 30, 60, 300, 600, 1200, 3600]
+
 models:
   +persist_docs:
     relation: true
