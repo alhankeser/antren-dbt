@@ -33,5 +33,9 @@ RUN dbt deps
 USER appuser
 
 EXPOSE 8080
+
 ARG env
-CMD dbt run --target $env
+ARG full_refresh=0
+ENV FULL_REFRESH=$full_refresh
+
+CMD ["sh", "-c", "if [ \"$FULL_REFRESH\" = \"1\" ]; then dbt run --target $env --full-refresh; else dbt run --target $env; fi"]
