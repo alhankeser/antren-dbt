@@ -1,5 +1,13 @@
+{{ config(materialized="incremental") }}
+
 with
-    activities_points as (select * from {{ ref("stg__activities_points") }}),
+    activities_points as (
+        select * 
+        from {{ ref("stg__activities_points") }}
+        {% if is_incremental() %}
+            where start_time_utc > (select max(start_time_utc) from {{ this }})
+        {% endif %}
+    ),
 
     activities_rolling_averages as (
         select
@@ -24,7 +32,7 @@ with
             id,
             start_time_ts,
             start_time_utc,
-            end_time_ts,
+            end_time_ts
     ),
 
     final as (select * from activities_peaks)

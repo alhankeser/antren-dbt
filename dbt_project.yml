@@ -20,6 +20,8 @@ clean-targets: ["target"]
 
 vars:
   peak_time_ranges: [5, 15, 30, 60, 300, 600, 1200, 3600]
+  training_start_date: "2014-01-01"
+  lookback_windows: [14, 28, 84]
 
 models:
   +persist_docs:
