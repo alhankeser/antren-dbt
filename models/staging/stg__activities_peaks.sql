@@ -14,11 +14,17 @@ with
 
     activities_peaks as (
         select 
-            id, 
-            start_time_utc, 
+            id,
+            start_time_ts,
+            start_time_utc,
+            end_time_ts,
             {{- get_peak_rolling_averages(column="watts", time_ranges=var("peak_time_ranges"))}}
         from activities_rolling_averages
-        group by id, start_time_utc
+        group by 
+            id,
+            start_time_ts,
+            start_time_utc,
+            end_time_ts,
     ),
 
     final as (select * from activities_peaks)
