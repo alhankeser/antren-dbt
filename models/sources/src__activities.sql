@@ -1,13 +1,13 @@
 with
-    base as (select * from {{ source("antren_app", "activities") }}),
+base as (select * from {{ source("antren_app", "activities") }}),
 
-    final as (
-        select
-            activity_id as id, 
-            start_time as start_time_ts, 
-            data as points
-        from base
-    )
+final as (
+    select
+        activity_id as id,
+        start_time as start_time_ts,
+        data as points
+    from base
+)
 
 select * from final
 
