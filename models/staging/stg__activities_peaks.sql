@@ -4,9 +4,6 @@ with
     activities_points as (
         select * 
         from {{ ref("stg__activities_points") }}
-        {% if is_incremental() %}
-            where start_time_utc > (select max(start_time_utc) from {{ this }})
-        {% endif %}
     ),
 
     activities_rolling_averages as (
@@ -16,6 +13,11 @@ with
                                 column="watts", 
                                 time_ranges=var("peak_time_ranges"), 
                                 partition_by_columns="id", 
+                                order_by_columns="ts")}},
+
+            {{- get_rolling_sums(
+                                column="kjs", 
+                                time_ranges=var("lookback_windows"),
                                 order_by_columns="ts")}}
         from activities_points
     ),
@@ -26,7 +28,8 @@ with
             start_time_ts,
             start_time_utc,
             end_time_ts,
-            {{- get_peak_rolling_averages(column="watts", time_ranges=var("peak_time_ranges"))}}
+            rolling_28d_kjs,
+            {{- get_peak_rolling_averages(column="watts", time_ranges=var("peak_time_ranges"))}},
         from activities_rolling_averages
         group by 
             id,

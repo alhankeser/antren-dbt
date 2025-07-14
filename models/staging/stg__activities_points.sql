@@ -55,6 +55,7 @@ activities_unnested as (
         start_time_utc,
         cast(ts_value as int64) as ts,
         cast(watts_value as int64) as watts,
+        watts / 1000.0 AS kjs,
         cast(heart_rate_value as int64) as heart_rate
     from
         activities_arrays,
@@ -75,6 +76,7 @@ joined as (
         max(a.start_time_ts) over (partition by f.id) as start_time_ts,
         max(a.start_time_utc) over (partition by f.id) as start_time_utc,
         coalesce(a.watts, 0) as watts,
+        coalesce(a.kjs, 0) as kjs,
         coalesce(a.heart_rate, 0) as heart_rate
     from activities_filled_in_ts_unnested as f
     left join activities_unnested as a
@@ -91,6 +93,7 @@ final as (
         end_time_ts,
         ts,
         watts,
+        kjs,
         heart_rate
     from joined
 )
